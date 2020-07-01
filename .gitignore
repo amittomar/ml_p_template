@@ -148,5 +148,8 @@ models/
 *.pkl
 *.pth
 
+#vscode file
+.vscode/
+
 #Not add the sample file
 src/sample.py
