@@ -147,3 +147,6 @@ models/
 *.h5
 *.pkl
 *.pth
+
+#Not add the sample file
+src/sample.py
