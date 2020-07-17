@@ -50,12 +50,16 @@ class CrossValidations:
             for fold,(train_idx, val_idx) in enumerate(kf.split(X=self.dataframe, y=self.dataframe.target.values)):
                 self.dataframe.loc[val_idx, 'kfold'] =fold
             
-        elif self.problem_type == "single_col_regression":
-            if self.num_target != 1:
+        elif self.problem_type in  ["single_col_regression","multi_column_regression"]:
+            # input validation
+            if self.num_target != 1 and self.problem_type == "single_col_regression":
                 raise Exception("Invalid number of target for this problem type")
+            if self.num_target < 2 and self.problem_type == "multi_column_regression":
+                raise Exception("Invalid number of target for this problem type")
+            
             target = self.target_cols[0]
             kf = model_selection.KFold(n_splits=self.num_folds)
-            for fold,(train_idx, val_idx) in enumerate(kf.split(X=self.dataframe, y=self.dataframe.target.values)):
+            for fold,(train_idx, val_idx) in enumerate(kf.split(X=self.dataframe)):
                 self.dataframe.loc[val_idx, 'kfold'] =fold
         else:
             raise Exception("Problem type not understandable")
