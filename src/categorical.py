@@ -14,7 +14,6 @@ class CategoricalFeatures:
         encoding_type : label, binary, one
         """
         self.df = df
-        self.out_df = self.df.copy(deep=True)
         self.cat_feats = categorical_features
         self.enc_type = encoding_type
         self.label_encoders = dict()
@@ -24,6 +23,9 @@ class CategoricalFeatures:
         if handle_na:
             for c in self.cat_feats:
                 self.df.loc[:, c] = self.df.loc[:, c].astype(str).fillna("-99999999999")
+         #make a copy after NA handling
+        self.out_df = self.df.copy(deep=True)
+         
 
     def _label_encoding(self):
         for c in self.cat_feats:
@@ -46,6 +48,9 @@ class CategoricalFeatures:
             
         self.binary_encoders[c] = lbl
         return self.out_df
+
+    def _ohe_hot(self):
+        ohe = preprocessing.OneHotEncoder()
 
     def fit_transform(self):
         if self.enc_type == "label":

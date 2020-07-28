@@ -40,7 +40,7 @@ class CrossValidations:
                 raise Exception("Invalid number of target for this problem type")
             unique_value = self.dataframe["target"].nunique()
             if unique_value == 1:
-                raise Exception("Only one unique vaklue found")
+                raise Exception("Only one unique value found")
 
             # Using Stratified Fold for binary and multi class classificatiomn 
             elif unique_value > 1:
